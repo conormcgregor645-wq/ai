@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Nova — подбор AI-инструментов</title>
+  <meta name="description" content="AI Nova — быстрый каталог AI-инструментов для текста, видео, дизайна, кода, бизнеса и учёбы." />
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    :root{
+      --bg:#050612;
+      --card:rgba(12,15,36,.72);
+      --card2:rgba(18,20,48,.86);
+      --line:rgba(143,124,255,.22);
+      --text:#fbfbff;
+      --muted:#aeb4cc;
+      --violet:#7c4dff;
+      --pink:#d83cff;
+      --cyan:#18c8ff;
+      --green:#45f4b7;
+    }
+    body{
+      min-height:100vh;
+      font-family:Inter,Arial,Helvetica,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 16% 10%,rgba(216,60,255,.20),transparent 32%),
+        radial-gradient(circle at 88% 8%,rgba(24,200,255,.16),transparent 30%),
+        radial-gradient(circle at 50% 85%,rgba(124,77,255,.18),transparent 38%),
+        var(--bg);
+      overflow-x:hidden;
+    }
+    body:before{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      background-image:
+        linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+      background-size:64px 64px;
+      mask-image:radial-gradient(circle at 50% 20%,black,transparent 72%);
+    }
+    body:after{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      background:radial-gradient(circle at var(--mx,60%) var(--my,30%),rgba(216,60,255,.14),transparent 24%);
+    }
+    a{color:inherit}
+    .wrap{width:min(1200px,100%);margin:auto;padding:0 22px}
+    .topbar{
+      position:sticky;
+      top:14px;
+      z-index:20;
+      margin-top:14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      padding:14px 16px;
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:rgba(6,8,24,.76);
+      backdrop-filter:blur(18px);
+      box-shadow:0 24px 70px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.06);
+    }
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+    .brand-mark{
+      width:46px;height:46px;border-radius:16px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--violet),var(--pink));
+      box-shadow:0 0 34px rgba(216,60,255,.34);
+      font-size:24px;font-weight:950;
+    }
+    .brand b{display:block;font-size:18px;letter-spacing:-.02em}
+    .brand small{display:block;color:var(--muted);font-size:13px;margin-top:3px}
+    .nav{display:flex;gap:20px;align-items:center}
+    .nav a{text-decoration:none;color:#e9e9ff;font-weight:760;font-size:14px;opacity:.9}
+    .nav a:hover{opacity:1;color:white}
+    .mobile-btn{display:none;border:1px solid var(--line);border-radius:14px;background:rgba(12,15,36,.8);color:white;width:46px;height:46px;font-size:22px}
+    .hero{
+      min-height:calc(100vh - 86px);
+      display:grid;
+      grid-template-columns:1.02fr .98fr;
+      gap:38px;
+      align-items:center;
+      padding:74px 0 58px;
+      position:relative;
+    }
+    .badge{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:10px 14px;margin-bottom:22px;
+      border:1px solid rgba(143,124,255,.28);
+      border-radius:999px;
+      background:rgba(12,15,36,.66);
+      color:#e7e9ff;
+      font-size:14px;font-weight:760;
+    }
+    .badge i{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 16px var(--green)}
+    h1{
+      max-width:680px;
+      margin-bottom:22px;
+      font-size:clamp(46px,7vw,86px);
+      line-height:.98;
+      letter-spacing:-.075em;
+      font-weight:950;
+    }
+    .gradient-text{
+      color:transparent;
+      background:linear-gradient(90deg,#fff 0%,#d83cff 48%,#18c8ff 100%);
+      -webkit-background-clip:text;background-clip:text;
+    }
+    .lead{
+      max-width:620px;
+      color:var(--muted);
+      font-size:18px;
+      line-height:1.65;
+    }
+    .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+    .btn{
+      min-height:56px;
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:0 22px;
+      border:0;border-radius:16px;
+      color:white;text-decoration:none;
+      background:linear-gradient(135deg,var(--violet),var(--pink));
+      box-shadow:0 20px 46px rgba(124,77,255,.28);
+      font-weight:900;
+      cursor:pointer;
+      transition:.22s;
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn.secondary{background:rgba(12,15,36,.72);border:1px solid var(--line);box-shadow:none}
+    .hero-proof{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px;color:#d7dbef}
+    .proof-pill{padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-weight:760;font-size:14px}
+    .visual{
+      min-height:560px;
+      border:1px solid var(--line);
+      border-radius:38px;
+      background:
+        radial-gradient(circle at 50% 42%,rgba(216,60,255,.32),transparent 25%),
+        radial-gradient(circle at 60% 54%,rgba(24,200,255,.20),transparent 33%),
+        linear-gradient(135deg,rgba(10,12,34,.92),rgba(23,15,60,.66));
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 35px 120px rgba(0,0,0,.36), inset 0 1px 0 rgba(255,255,255,.08);
+    }
+    .visual:before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px),
+        radial-gradient(circle,rgba(255,255,255,.55) 1px,transparent 1.7px);
+      background-size:42px 42px,42px 42px,150px 150px;
+      opacity:.23;
+    }
+    .visual:after{
+      content:"";
+      position:absolute;
+      inset:22px;
+      border:1px solid rgba(143,124,255,.14);
+      border-radius:30px;
+      pointer-events:none;
+    }
+    .orbit{
+      position:absolute;
+      left:50%;
+      top:43%;
+      width:600px;
+      height:220px;
+      border:1px solid rgba(24,200,255,.25);
+      border-radius:50%;
+      transform:translate(-50%,-50%) rotate(-12deg);
+      animation:orbit 28s linear infinite;
+      box-shadow:0 0 30px rgba(24,200,255,.08);
+    }
+    .orbit.two{
+      width:500px;
+      height:205px;
+      border-color:rgba(216,60,255,.25);
+      transform:translate(-50%,-50%) rotate(18deg);
+      animation-direction:reverse;
+      animation-duration:24s;
+    }
+    .orbit.three{
+      width:690px;
+      height:270px;
+      border-color:rgba(255,255,255,.14);
+      transform:translate(-50%,-50%) rotate(34deg);
+      animation-duration:34s;
+    }
+    .orbit-dot{
+      position:absolute;
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:var(--cyan);
+      box-shadow:0 0 18px var(--cyan);
+      z-index:2;
+    }
+    .od1{left:32%;top:20%}
+    .od2{right:21%;top:37%;background:var(--pink);box-shadow:0 0 18px var(--pink)}
+    .od3{left:46%;bottom:30%}
+    .core{
+      position:absolute;
+      left:50%;
+      top:43%;
+      width:245px;
+      height:245px;
+      border-radius:50%;
+      transform:translate(-50%,-50%);
+      background:
+        radial-gradient(circle at 34% 30%,rgba(24,200,255,.95),transparent 25%),
+        radial-gradient(circle at 72% 66%,rgba(216,60,255,.9),transparent 33%),
+        radial-gradient(circle,rgba(124,77,255,.34),rgba(6,8,24,.18));
+      box-shadow:0 0 92px rgba(124,77,255,.72), inset 0 0 60px rgba(255,255,255,.10);
+      animation:coreFloat 5.8s ease-in-out infinite;
+      z-index:2;
+      display:grid;
+      place-items:center;
+      text-align:center;
+    }
+    .core:before,.core:after{
+      content:"";
+      position:absolute;
+      inset:26px;
+      border:1px dashed rgba(255,255,255,.34);
+      border-radius:50%;
+      animation:spin 20s linear infinite;
+    }
+    .core:after{
+      inset:68px;
+      border-color:rgba(24,200,255,.45);
+      animation-direction:reverse;
+      animation-duration:15s;
+    }
+    .core-title{
+      position:relative;
+      z-index:3;
+      font-size:38px;
+      font-weight:950;
+      letter-spacing:-.06em;
+      line-height:1;
+    }
+    .core-title span{
+      color:transparent;
+      background:linear-gradient(90deg,#7c4dff,#d83cff,#fff);
+      -webkit-background-clip:text;
+      background-clip:text;
+    }
+    .core-sub{
+      position:relative;
+      z-index:3;
+      margin-top:10px;
+      color:#d8dcf2;
+      font-size:13px;
+      line-height:1.35;
+    }
+    .visual-node{
+      position:absolute;
+      z-index:4;
+      display:grid;
+      grid-template-columns:58px 1fr 32px;
+      align-items:center;
+      gap:12px;
+      width:250px;
+      min-height:82px;
+      padding:12px;
+      border:1px solid rgba(143,124,255,.32);
+      border-radius:24px;
+      background:rgba(10,13,38,.78);
+      box-shadow:0 22px 55px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.07);
+      backdrop-filter:blur(16px);
+      animation:nodeFloat 5.2s ease-in-out infinite;
+    }
+    .node-icon{
+      width:54px;
+      height:54px;
+      display:grid;
+      place-items:center;
+      border-radius:19px;
+      background:linear-gradient(135deg,rgba(124,77,255,.34),rgba(216,60,255,.20));
+      color:#fff;
+      font-size:25px;
+      box-shadow:0 0 28px rgba(216,60,255,.20);
+    }
+    .visual-node h4{
+      font-size:16px;
+      margin-bottom:4px;
+    }
+    .visual-node p{
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.35;
+    }
+    .node-arrow{
+      width:32px;
+      height:32px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:rgba(124,77,255,.22);
+      color:white;
+      font-weight:950;
+    }
+    .vn1{left:38px;top:90px}
+    .vn2{right:38px;top:90px;animation-delay:.4s}
+    .vn3{left:38px;bottom:150px;animation-delay:.8s}
+    .vn4{right:38px;bottom:150px;animation-delay:1.1s}
+    .vn3 .node-icon{background:linear-gradient(135deg,rgba(24,200,255,.30),rgba(69,244,183,.14))}
+    .vn4 .node-icon{background:linear-gradient(135deg,rgba(24,92,255,.34),rgba(124,77,255,.18))}
+    .scan{
+      position:absolute;
+      left:50%;
+      bottom:76px;
+      transform:translateX(-50%);
+      width:min(76%,540px);
+      min-height:52px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      padding:0 18px;
+      border-radius:999px;
+      background:rgba(5,6,18,.74);
+      border:1px solid rgba(143,124,255,.26);
+      color:#d9def6;
+      font-size:14px;
+      font-weight:760;
+      z-index:5;
+      overflow:hidden;
+    }
+    .scan:after{
+      content:"";
+      height:26px;
+      flex:1;
+      background:
+        linear-gradient(90deg,transparent,rgba(124,77,255,.2),transparent),
+        repeating-linear-gradient(90deg,rgba(24,200,255,0) 0 7px,rgba(24,200,255,.7) 8px 10px);
+      mask-image:linear-gradient(90deg,transparent,black 20%,black 80%,transparent);
+      opacity:.75;
+      animation:bars 1.4s ease-in-out infinite alternate;
+    }
+    .scan i{
+      display:inline-block;
+      width:12px;
+      height:12px;
+      border-radius:50%;
+      background:var(--cyan);
+      box-shadow:0 0 16px var(--cyan);
+      flex:none;
+    }
+    .visual-stats{
+      position:absolute;
+      left:32px;
+      right:32px;
+      bottom:18px;
+      z-index:5;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      padding:12px;
+      border:1px solid rgba(143,124,255,.18);
+      border-radius:24px;
+      background:rgba(5,6,18,.52);
+      backdrop-filter:blur(14px);
+    }
+    .vstat{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:8px;
+      border-right:1px solid rgba(255,255,255,.08);
+    }
+    .vstat:last-child{border-right:0}
+    .vstat b{
+      display:block;
+      color:#fff;
+      font-size:18px;
+      line-height:1;
+    }
+    .vstat small{
+      display:block;
+      margin-top:4px;
+      color:var(--muted);
+      font-size:10px;
+    }
+    .vstat-icon{
+      width:34px;
+      height:34px;
+      display:grid;
+      place-items:center;
+      border-radius:12px;
+      background:rgba(124,77,255,.18);
+      color:#d83cff;
+      flex:none;
+    }
+    @keyframes coreFloat{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-12px)}}
+    @keyframes nodeFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes orbit{to{transform:translate(-50%,-50%) rotate(348deg)}}
+    @keyframes bars{from{opacity:.45;transform:scaleY(.75)}to{opacity:1;transform:scaleY(1.05)}}    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes orbit{to{transform:translate(-50%,-50%) rotate(348deg)}}
+    section{padding:50px 0}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:22px}
+    .section-head h2{font-size:clamp(32px,4vw,54px);letter-spacing:-.05em;line-height:1.04}
+    .section-head p{max-width:450px;color:var(--muted);line-height:1.6}
+    .panel,.card{
+      border:1px solid var(--line);
+      border-radius:28px;
+      background:var(--card);
+      box-shadow:0 28px 80px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.055);
+      backdrop-filter:blur(16px);
+      position:relative;
+      overflow:hidden;
+    }
+    .panel:before,.card:before{
+      content:"";
+      position:absolute;inset:0;
+      background:radial-gradient(circle at var(--x,50%) var(--y,10%),rgba(216,60,255,.12),transparent 32%);
+      opacity:0;transition:.22s;pointer-events:none;
+    }
+    .panel:hover:before,.card:hover:before{opacity:1}
+    .panel{padding:28px}
+    .search-row{display:grid;grid-template-columns:1fr auto;gap:12px;margin-top:18px}
+    input,select{
+      width:100%;
+      min-height:56px;
+      border:1px solid rgba(143,124,255,.28);
+      border-radius:17px;
+      background:rgba(5,7,22,.74);
+      color:white;
+      padding:0 16px;
+      outline:none;
+      font-size:16px;
+    }
+    select option{background:#0c1027;color:white}
+    .results{display:grid;gap:12px;margin-top:16px}
+    .result{
+      display:grid;grid-template-columns:50px 1fr auto;gap:14px;align-items:center;
+      padding:14px;border:1px solid rgba(143,124,255,.18);
+      border-radius:18px;background:rgba(5,7,22,.48);
+    }
+    .logo{width:50px;height:50px;border-radius:16px;display:grid;place-items:center;background:rgba(124,77,255,.18);color:#d83cff;font-weight:950}
+    .result h4{margin-bottom:4px}.result p{color:var(--muted);font-size:14px;line-height:1.45}
+    .mini-btn{padding:11px 14px;border:0;border-radius:13px;background:linear-gradient(135deg,var(--violet),var(--pink));color:white;font-weight:900;cursor:pointer;text-decoration:none;white-space:nowrap}
+    .quiz-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:24px}
+    .quiz-copy h2{font-size:clamp(32px,4vw,54px);line-height:1.04;letter-spacing:-.05em;margin-bottom:14px}
+    .quiz-copy p{color:var(--muted);line-height:1.65}
+    .quiz-box{padding:22px;border-radius:24px;border:1px solid rgba(143,124,255,.2);background:rgba(5,7,22,.45)}
+    .quiz-step{display:none}.quiz-step.active{display:block;animation:fadeUp .3s ease both}
+    .quiz-options{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+    .option{min-height:74px;border:1px solid rgba(143,124,255,.28);border-radius:18px;background:rgba(12,15,36,.72);color:white;padding:15px;text-align:left;font-weight:900;cursor:pointer}
+    .option.active,.option:hover{border-color:rgba(216,60,255,.72);background:rgba(216,60,255,.14)}
+    .quiz-actions{display:flex;gap:10px;margin-top:16px}
+    .compare-controls{display:grid;grid-template-columns:1fr 60px 1fr;gap:14px;margin:20px 0}
+    .swap{border:1px solid rgba(143,124,255,.28);border-radius:50%;background:rgba(5,7,22,.74);color:white;font-size:22px;cursor:pointer}
+    .compare-preview{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .compare-card{padding:18px;border:1px solid rgba(143,124,255,.18);border-radius:22px;background:rgba(5,7,22,.45)}
+    .compare-card p{color:var(--muted);line-height:1.45;margin-top:8px}
+    .compare-table{margin-top:16px;border:1px solid rgba(143,124,255,.18);border-radius:20px;overflow:hidden}
+    .row{display:grid;grid-template-columns:190px 1fr 1fr;border-bottom:1px solid rgba(143,124,255,.16)}
+    .row:last-child{border-bottom:0}.cell{padding:14px 16px;line-height:1.45;border-right:1px solid rgba(143,124,255,.16);color:#e7e9ff}.cell:last-child{border-right:0}.label{color:#d83cff;background:rgba(124,77,255,.08);font-weight:950}
+    .collections{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .collection{padding:24px;min-height:210px;transition:.22s}
+    .collection:hover,.card:hover{transform:translateY(-5px);border-color:rgba(216,60,255,.46)}
+    .collection h3{font-size:23px;margin-bottom:10px}.collection p{color:var(--muted);line-height:1.55}
+    .layout{display:grid;grid-template-columns:300px 1fr;gap:24px}
+    .sidebar{padding:22px;height:max-content;position:sticky;top:105px}
+    .side-title{font-size:24px;margin-bottom:18px}
+    .label-small{margin:18px 0 9px;color:var(--muted);font-weight:900}
+    .filters{display:flex;flex-wrap:wrap;gap:8px}
+    .filter{border:1px solid rgba(143,124,255,.26);border-radius:13px;background:rgba(5,7,22,.62);color:#dfe2f4;padding:9px 12px;font-weight:850;cursor:pointer}
+    .filter.active{background:linear-gradient(135deg,var(--violet),var(--pink));border-color:transparent;color:white}
+    .catalog-top{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:18px}
+    .catalog-top h2{font-size:clamp(34px,4vw,58px);letter-spacing:-.055em}
+    .catalog-top p{color:var(--muted);line-height:1.55;margin-top:8px}
+    .featured{padding:18px;margin-bottom:18px}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .chip,.tag{padding:8px 10px;border-radius:999px;background:rgba(124,77,255,.14);color:#eeeaff;font-size:13px;font-weight:850}
+    .tag{background:rgba(24,200,255,.1);color:#c7f7ff}
+    .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .card{padding:23px;min-height:300px;display:flex;flex-direction:column;gap:16px;transition:.22s}
+    .card-top{display:flex;justify-content:space-between;gap:16px}
+    .card h3{font-size:24px}.card p{color:var(--muted);line-height:1.55}
+    .meta,.tags{display:flex;flex-wrap:wrap;gap:8px}.tags{margin-top:auto}
+    .card-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .open,.details{border:0;border-radius:14px;padding:12px 15px;color:white;text-decoration:none;font-weight:900;cursor:pointer;background:rgba(21,25,65,.92)}
+    .details{background:linear-gradient(135deg,var(--violet),var(--pink))}
+    .show{margin-top:18px}
+    .empty{display:none;padding:30px;text-align:center;color:var(--muted)}
+    .about{padding:24px;margin-top:20px}.about p{color:var(--muted);line-height:1.65;margin-top:8px}
+    .modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(2,4,16,.78);backdrop-filter:blur(12px)}
+    .modal.active{display:flex}
+    .modal-box{width:min(880px,100%);max-height:90vh;overflow:auto;padding:28px}
+    .modal-top{display:flex;justify-content:space-between;gap:18px;margin-bottom:18px}
+    .close{width:44px;height:44px;border-radius:14px;border:1px solid rgba(143,124,255,.28);background:rgba(5,7,22,.8);color:white;font-size:24px;cursor:pointer}
+    .modal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+    .stat{padding:14px;border-radius:16px;background:rgba(124,77,255,.12)}
+    .bottom{display:none;position:fixed;left:12px;right:12px;bottom:12px;z-index:30;grid-template-columns:repeat(4,1fr);gap:8px;padding:8px;border:1px solid var(--line);border-radius:20px;background:rgba(6,8,24,.88);backdrop-filter:blur(16px)}
+    .bottom a{text-decoration:none;text-align:center;padding:9px 4px;border-radius:13px;background:rgba(124,77,255,.14);font-size:12px;font-weight:850}
+    
+.simple-visual{
+display:flex;
+align-items:center;
+justify-content:center;
+}
+.simple-core{
+position:relative;
+z-index:2;
+width:320px;
+height:320px;
+border-radius:50%;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+background:
+radial-gradient(circle at 32% 30%,rgba(24,200,255,.95),transparent 22%),
+radial-gradient(circle at 72% 70%,rgba(216,60,255,.9),transparent 30%),
+rgba(124,77,255,.24);
+box-shadow:0 0 120px rgba(124,77,255,.55), inset 0 0 60px rgba(255,255,255,.08);
+animation:corePulse 6s ease-in-out infinite;
+}
+.simple-core:before{
+content:"";
+position:absolute;
+inset:-42px;
+border-radius:50%;
+border:1px solid rgba(255,255,255,.14);
+}
+.simple-core:after{
+content:"";
+position:absolute;
+inset:32px;
+border-radius:50%;
+border:1px dashed rgba(255,255,255,.28);
+animation:spin 20s linear infinite;
+}
+.simple-core h2{
+font-size:76px;
+line-height:1;
+font-weight:950;
+letter-spacing:-.08em;
+position:relative;
+z-index:2;
+}
+.simple-core h2 span{
+color:transparent;
+background:linear-gradient(90deg,#d83cff,#ffffff);
+-webkit-background-clip:text;
+background-clip:text;
+}
+.simple-core p{
+margin-top:16px;
+font-size:24px;
+line-height:1.35;
+color:#ececff;
+position:relative;
+z-index:2;
+}
+.simple-orbit{
+position:absolute;
+border-radius:50%;
+border:2px solid rgba(216,60,255,.42);
+opacity:.9;
+}
+.orbit-a{
+width:720px;
+height:280px;
+transform:rotate(24deg);
+animation:orbit1 18s linear infinite;
+}
+.orbit-b{
+width:720px;
+height:280px;
+border-color:rgba(24,200,255,.48);
+transform:rotate(-24deg);
+animation:orbit2 22s linear infinite;
+}
+.orbit-c{
+width:520px;
+height:520px;
+border-color:rgba(255,255,255,.10);
+animation:spin 30s linear infinite;
+}
+.particle{
+position:absolute;
+width:16px;
+height:16px;
+border-radius:50%;
+z-index:3;
+}
+.p1{
+background:#18c8ff;
+left:22%;
+bottom:22%;
+box-shadow:0 0 24px #18c8ff;
+animation:floaty 4s ease-in-out infinite;
+}
+.p2{
+background:#d83cff;
+right:22%;
+top:24%;
+box-shadow:0 0 24px #d83cff;
+animation:floaty 5s ease-in-out infinite;
+}
+.p3{
+background:#8b5dff;
+right:38%;
+bottom:16%;
+box-shadow:0 0 24px #8b5dff;
+animation:floaty 6s ease-in-out infinite;
+}
+@keyframes orbit1{to{transform:rotate(384deg)}}
+@keyframes orbit2{to{transform:rotate(-384deg)}}
+@keyframes corePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@media(max-width:980px){
+      .hero,.quiz-grid,.layout,.compare-preview{grid-template-columns:1fr}
+      .visual{min-height:520px}.visual-node{width:225px;grid-template-columns:52px 1fr 30px}.node-icon{width:50px;height:50px}.vn1,.vn3{left:24px}.vn2,.vn4{right:24px}.visual-stats{grid-template-columns:repeat(2,1fr)}.vstat:nth-child(2){border-right:0}
+      .collections{grid-template-columns:repeat(2,1fr)}
+      .sidebar{position:relative;top:0}
+      .catalog-top,.section-head{flex-direction:column;align-items:flex-start}
+    }
+    @media(max-width:720px){
+      body{padding-bottom:78px}
+      .wrap{padding:0 16px}
+      .mobile-btn{display:block}
+      .nav{display:none;width:100%;flex-direction:column;align-items:flex-start;padding:8px 0 4px}
+      .topbar.open .nav{display:flex}
+      .topbar{align-items:flex-start;flex-wrap:wrap}
+      .hero{padding:52px 0}.visual{display:none}
+      .hero-actions,.search-row,.quiz-options,.compare-controls,.cards,.collections,.modal-grid{grid-template-columns:1fr;display:grid}
+      .btn{width:100%}.swap{height:52px;border-radius:16px}
+      .result{grid-template-columns:50px 1fr}.result .mini-btn{grid-column:1/-1;text-align:center}
+      .row{grid-template-columns:1fr}.cell{border-right:0;border-bottom:1px solid rgba(143,124,255,.16)}
+      .bottom{display:grid}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar" id="topbar">
+      <a class="brand" href="#">
+        <span class="brand-mark">✦</span>
+        <span><b>AI Nova</b><small>AI Discovery Platform</small></span>
+      </a>
+      <button class="mobile-btn" id="mobileBtn">☰</button>
+      <nav class="nav">
+        <a href="#catalog">Каталог</a>
+        <a href="#quiz">AI Quiz</a>
+        <a href="#search">Поиск</a>
+        <a href="#compare">Сравнение</a>
+        <a href="#collections">Подборки</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div>
+        <div class="badge"><i></i> 10+ AI-сервисов • быстрый подбор • сравнение</div>
+        <h1>Найди лучший <span class="gradient-text">AI-инструмент</span> под свою задачу</h1>
+        <p class="lead">Современный каталог AI-сервисов для текста, видео, дизайна, кода, учёбы и бизнеса. Без лишнего шума — только быстрый выбор и понятное сравнение.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#catalog">Открыть каталог →</a>
+          <a class="btn secondary" href="#quiz">Подобрать через Quiz →</a>
+        </div>
+        <div class="hero-proof">
+          <span class="proof-pill">⚡ быстрый поиск</span>
+          <span class="proof-pill">⭐ рейтинг сервисов</span>
+          <span class="proof-pill">🧠 подбор по задаче</span>
+        </div>
+      </div>
+
+      
+<div class="visual simple-visual">
+  <div class="simple-orbit orbit-a"></div>
+  <div class="simple-orbit orbit-b"></div>
+  <div class="simple-orbit orbit-c"></div>
+  <div class="simple-core">
+    <h2><span>AI</span> Hub</h2>
+    <p>Лучшие AI-инструменты<br>для любых задач</p>
+  </div>
+  <span class="particle p1"></span>
+  <span class="particle p2"></span>
+  <span class="particle p3"></span>
+</div>
+
+          <div class="vstat"><div class="vstat-icon">↗</div><div><b>8+</b><small>категорий</small></div></div>
+          <div class="vstat"><div class="vstat-icon">⚡</div><div><b>1 мин</b><small>на подбор</small></div></div>
+          <div class="vstat"><div class="vstat-icon">◇</div><div><b>100%</b><small>удобный поиск</small></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz">
+      <div class="panel">
+        <div class="quiz-grid">
+          <div class="quiz-copy">
+            <div class="badge"><i></i> AI Match Quiz</div>
+            <h2>Собери свой <span class="gradient-text">AI-набор</span></h2>
+            <p>Ответь на 3 коротких вопроса — сайт подберёт инструменты под цель, уровень и бюджет.</p>
+          </div>
+          <div class="quiz-box">
+            <div class="quiz-step active" data-step="0">
+              <h3>Для чего нужен AI?</h3>
+              <div class="quiz-options">
+                <button class="option" data-key="audience" data-value="Работа">Работа и фриланс</button>
+                <button class="option" data-key="audience" data-value="Бизнес">Бизнес</button>
+                <button class="option" data-key="audience" data-value="Студенты">Учёба</button>
+                <button class="option" data-key="audience" data-value="Блогеры">Контент</button>
+              </div>
+            </div>
+            <div class="quiz-step" data-step="1">
+              <h3>Какая основная задача?</h3>
+              <div class="quiz-options">
+                <button class="option" data-key="task" data-value="Тексты">Тексты</button>
+                <button class="option" data-key="task" data-value="Видео">Видео</button>
+                <button class="option" data-key="task" data-value="Код">Код</button>
+                <button class="option" data-key="task" data-value="Изображения">Дизайн</button>
+              </div>
+            </div>
+            <div class="quiz-step" data-step="2">
+              <h3>Какой вариант удобнее?</h3>
+              <div class="quiz-options">
+                <button class="option" data-key="level" data-value="Новичок">Для новичка</button>
+                <button class="option" data-key="level" data-value="Средний">Для опытного</button>
+                <button class="option" data-key="price" data-value="бесплат">Бесплатный план</button>
+                <button class="option" data-key="level" data-value="Любой">Любой вариант</button>
+              </div>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn secondary" id="quizBack" style="display:none">Назад</button>
+              <button class="btn" id="quizReset">Сбросить</button>
+            </div>
+            <div class="results" id="quizResult"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="search">
+      <div class="panel">
+        <div class="section-head">
+          <div><h2>Умный поиск <span class="gradient-text">по каталогу</span></h2></div>
+          <p>Напиши задачу, категорию или название сервиса — результаты обновятся сразу.</p>
+        </div>
+        <div class="search-row">
+          <input id="liveSearchInput" placeholder="Например: видео, код, резюме, дизайн..." />
+          <button class="btn" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">В каталог</button>
+        </div>
+        <div class="results" id="liveSearchResults"></div>
+      </div>
+    </section>
+
+    <section id="compare">
+      <div class="panel">
+        <div class="section-head">
+          <h2>Сравни сервисы <span class="gradient-text">перед выбором</span></h2>
+          <p>Цена, сложность, задачи и рейтинг — всё в одной таблице.</p>
+        </div>
+        <div class="compare-controls">
+          <select id="compareA"></select>
+          <button class="swap" id="compareSwap">⇄</button>
+          <select id="compareB"></select>
+        </div>
+        <div class="compare-preview" id="comparePreview"></div>
+        <div class="compare-table" id="compareTable"></div>
+      </div>
+    </section>
+
+    <section id="collections">
+      <div class="section-head">
+        <h2>Готовые <span class="gradient-text">подборки</span></h2>
+        <p>Быстрые сценарии для популярных задач.</p>
+      </div>
+      <div class="collections">
+        <article class="panel collection"><h3>AI для YouTube</h3><p>Сценарии, озвучка, монтаж, превью и идеи роликов.</p><button class="mini-btn" data-collection="Блогеры" style="margin-top:18px">Открыть</button></article>
+        <article class="panel collection"><h3>AI для фриланса</h3><p>Код, дизайн, тексты, презентации и автоматизация задач.</p><button class="mini-btn" data-collection="Работа" style="margin-top:18px">Открыть</button></article>
+        <article class="panel collection"><h3>AI для стартапов</h3><p>Идеи, MVP, маркетинг, аналитика и быстрые документы.</p><button class="mini-btn" data-collection="Бизнес" style="margin-top:18px">Открыть</button></article>
+      </div>
+    </section>
+
+    <section id="catalog">
+      <div class="layout">
+        <aside class="panel sidebar">
+          <h2 class="side-title">Подбор AI</h2>
+          <div class="label-small">Поиск</div>
+          <input id="searchInput" placeholder="Например: видео, код..." />
+          <div class="label-small">Для кого</div>
+          <div class="filters" id="audienceFilters"></div>
+          <div class="label-small">Задача</div>
+          <div class="filters" id="taskFilters"></div>
+        </aside>
+
+        <main>
+          <div class="catalog-top">
+            <div>
+              <h2>AI-инструменты</h2>
+              <p>Каталог сервисов для кода, текстов, дизайна, видео, голоса, работы и учёбы.</p>
+            </div>
+            <select id="sortSelect">
+              <option value="default">Сначала все</option>
+              <option value="rating">По рейтингу</option>
+              <option value="free">Сначала бесплатные</option>
+              <option value="easy">Для новичков</option>
+            </select>
+          </div>
+
+          <div class="panel featured">
+            <h3>Топ-инструменты</h3>
+            <div class="chips" id="featuredList"></div>
+          </div>
+
+          <p style="color:var(--muted);margin-bottom:14px"><span id="counter">0</span> вариантов найдено</p>
+          <div class="cards" id="cards"></div>
+          <button class="btn secondary show" id="showAllToolsBtn" style="display:none">Показать все</button>
+          <div class="panel empty" id="empty">Ничего не найдено. Попробуйте другой фильтр или запрос.</div>
+
+          <div class="panel about" id="about">
+            <h2>О проекте</h2>
+            <p>AI Nova помогает быстро выбрать AI-инструмент под конкретную задачу: написать текст, создать изображение, смонтировать видео, подготовить резюме, учиться или программировать.</p>
+          </div>
+        </main>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="panel modal-box">
+      <div class="modal-top">
+        <div><h2 id="modalTitle"></h2><p class="lead" id="modalDesc"></p></div>
+        <button class="close" id="closeModal">×</button>
+      </div>
+      <div class="modal-grid">
+        <div class="stat"><small>Рейтинг</small><br><b id="modalRating"></b></div>
+        <div class="stat"><small>Цена</small><br><b id="modalPrice"></b></div>
+        <div class="stat"><small>Сложность</small><br><b id="modalLevel"></b></div>
+      </div>
+      <div class="tags" id="modalTags"></div>
+      <div class="hero-actions">
+        <a class="btn secondary" id="modalLink" target="_blank" rel="noreferrer">Открыть сервис</a>
+        <button class="btn" id="modalCompareBtn">Сравнить</button>
+      </div>
+    </div>
+  </div>
+
+  <nav class="bottom">
+    <a href="#catalog">Каталог</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#search">Поиск</a>
+    <a href="#compare">Compare</a>
+  </nav>
+
+<script>
+const audiences=["Все","Студенты","Блогеры","Бизнес","Работа","Разработчики","Дизайнеры","Маркетинг"];
+const tasks=["Все","Тексты","Учёба","Презентации","Контент","Резюме","Видео","Изображения","Голос","Автоматизация","Код","Таблицы"];
+const tools=[
+{name:"Cursor",short:"C",desc:"Редактор кода с AI-помощником: объясняет проект, пишет функции и помогает исправлять ошибки.",audience:["Разработчики","Работа"],task:["Код","Автоматизация"],price:"Есть бесплатный план",level:"Средний",rating:4.9,popular:true,url:"https://cursor.com"},
+{name:"GitHub Copilot",short:"GC",desc:"AI-помощник для программирования, автодополнения, тестов, рефакторинга и объяснения кода.",audience:["Разработчики","Работа","Бизнес"],task:["Код","Автоматизация"],price:"Платно",level:"Средний",rating:4.8,popular:true,url:"https://github.com/features/copilot"},
+{name:"Replit AI",short:"RA",desc:"Помогает писать и запускать код в браузере, подходит для прототипов, учебных проектов и MVP.",audience:["Студенты","Разработчики"],task:["Код","Учёба"],price:"Есть бесплатный план",level:"Новичок",rating:4.6,popular:false,url:"https://replit.com"},
+{name:"ChatGPT",short:"AI",desc:"Универсальный помощник для текстов, идей, анализа, обучения, планирования и автоматизации задач.",audience:["Студенты","Бизнес","Маркетинг","Работа"],task:["Тексты","Учёба","Контент","Резюме"],price:"Есть бесплатный план",level:"Новичок",rating:4.9,popular:true,url:"https://chatgpt.com"},
+{name:"Midjourney",short:"MJ",desc:"Генерация выразительных изображений, концептов, рекламных визуалов и художественных идей.",audience:["Дизайнеры","Блогеры","Маркетинг"],task:["Изображения","Контент"],price:"Платно",level:"Новичок",rating:4.7,popular:true,url:"https://midjourney.com"},
+{name:"Runway",short:"R",desc:"AI-платформа для генерации и редактирования видео, визуальных эффектов и креативных роликов.",audience:["Блогеры","Дизайнеры","Маркетинг"],task:["Видео","Контент"],price:"Есть бесплатный план",level:"Средний",rating:4.6,popular:false,url:"https://runwayml.com"},
+{name:"Notion AI",short:"N",desc:"Помогает писать заметки, структурировать документы, резюмировать встречи и управлять знаниями.",audience:["Бизнес","Студенты","Работа"],task:["Тексты","Таблицы","Учёба"],price:"Есть бесплатный план",level:"Новичок",rating:4.5,popular:false,url:"https://notion.so"},
+{name:"ElevenLabs",short:"EL",desc:"Генерация реалистичных голосов, дубляж, озвучка роликов, подкастов и обучающих материалов.",audience:["Блогеры","Маркетинг","Бизнес"],task:["Голос","Контент"],price:"Есть бесплатный план",level:"Новичок",rating:4.7,popular:true,url:"https://elevenlabs.io"},
+{name:"Canva AI",short:"CA",desc:"Подходит для презентаций, постов, простого дизайна и визуального контента.",audience:["Студенты","Бизнес","Маркетинг","Дизайнеры"],task:["Презентации","Изображения","Контент"],price:"Есть бесплатный план",level:"Новичок",rating:4.6,popular:true,url:"https://canva.com"},
+{name:"Gamma",short:"G",desc:"Быстро создаёт презентации и лендинги по текстовому запросу.",audience:["Студенты","Бизнес","Работа"],task:["Презентации","Тексты"],price:"Есть бесплатный план",level:"Новичок",rating:4.6,popular:true,url:"https://gamma.app"}
+];
+
+let activeAudience="Все",activeTask="Все",showAll=false,quizStep=0;
+const quizState={};
+const $=id=>document.getElementById(id);
+
+function renderFilters(){
+  [["audienceFilters",audiences,"audience"],["taskFilters",tasks,"task"]].forEach(([id,items,type])=>{
+    const box=$(id); box.innerHTML="";
+    items.forEach(item=>{
+      const b=document.createElement("button");
+      b.className="filter"+(((type==="audience"?activeAudience:activeTask)===item)?" active":"");
+      b.textContent=item;
+      b.onclick=()=>{type==="audience"?activeAudience=item:activeTask=item;showAll=false;renderFilters();renderCards()};
+      box.appendChild(b);
+    });
+  });
+}
+function filteredTools(){
+  const q=$("searchInput").value.trim().toLowerCase();
+  const arr=tools.filter(t=>{
+    const audienceOk=activeAudience==="Все"||t.audience.includes(activeAudience);
+    const taskOk=activeTask==="Все"||t.task.includes(activeTask);
+    const text=`${t.name} ${t.desc} ${t.audience.join(" ")} ${t.task.join(" ")} ${t.price} ${t.level}`.toLowerCase();
+    return audienceOk&&taskOk&&(!q||text.includes(q));
+  });
+  if($("sortSelect").value==="rating")arr.sort((a,b)=>b.rating-a.rating);
+  if($("sortSelect").value==="free")arr.sort((a,b)=>Number(b.price.includes("бесплат"))-Number(a.price.includes("бесплат")));
+  if($("sortSelect").value==="easy")arr.sort((a,b)=>Number(b.level==="Новичок")-Number(a.level==="Новичок"));
+  return arr;
+}
+function renderCards(){
+  const arr=filteredTools();
+  const visible=showAll?arr:arr.slice(0,4);
+  $("counter").textContent=arr.length;
+  $("cards").innerHTML="";
+  $("empty").style.display=arr.length?"none":"block";
+  $("showAllToolsBtn").style.display=arr.length>4?"inline-flex":"none";
+  $("showAllToolsBtn").textContent=showAll?"Скрыть":`Показать все (${arr.length})`;
+  visible.forEach(t=>{
+    const card=document.createElement("article");
+    card.className="card";
+    card.innerHTML=`<div class="card-top"><div><h3>${t.name}</h3><p>${t.desc}</p></div><div class="logo">${t.short}</div></div>
+    <div class="meta"><span class="chip">⭐ ${t.rating}</span><span class="chip">${t.price}</span><span class="chip">${t.level}</span></div>
+    <div class="tags">${[...t.audience,...t.task].map(x=>`<span class="tag">${x}</span>`).join("")}</div>
+    <div class="card-actions"><a class="open" href="${t.url}" target="_blank" rel="noreferrer">Открыть сервис</a><button class="details" data-open="${t.name}">Подробнее</button></div>`;
+    $("cards").appendChild(card);
+  });
+}
+function renderFeatured(){
+  $("featuredList").innerHTML=tools.filter(t=>t.popular).slice(0,5).map(t=>`<span class="chip">⭐ ${t.name}</span>`).join("");
+}
+function renderLiveSearch(){
+  const q=$("liveSearchInput").value.trim().toLowerCase();
+  const arr=(q?tools.filter(t=>`${t.name} ${t.desc} ${t.audience.join(" ")} ${t.task.join(" ")}`.toLowerCase().includes(q)):tools.filter(t=>t.popular)).slice(0,5);
+  $("liveSearchResults").innerHTML=arr.map(resultHTML).join("");
+}
+function resultHTML(t){
+  return `<div class="result"><div class="logo">${t.short}</div><div><h4>${t.name}</h4><p>${t.desc}</p></div><button class="mini-btn" data-open="${t.name}">Обзор</button></div>`;
+}
+function fillCompare(){
+  const a=$("compareA"),b=$("compareB");
+  a.innerHTML="";b.innerHTML="";
+  tools.forEach((t,i)=>{a.add(new Option(t.name,t.name,i===0,i===0));b.add(new Option(t.name,t.name,i===3,i===3))});
+  a.onchange=renderCompare;b.onchange=renderCompare;renderCompare();
+}
+function renderCompare(){
+  const first=tools.find(t=>t.name===$("compareA").value);
+  const second=tools.find(t=>t.name===$("compareB").value);
+  $("comparePreview").innerHTML=[first,second].map(t=>`<div class="compare-card"><div class="logo">${t.short}</div><h3 style="margin-top:12px">${t.name}</h3><p>${t.desc}</p></div>`).join("");
+  const rows={"Рейтинг":[first.rating,second.rating],"Цена":[first.price,second.price],"Сложность":[first.level,second.level],"Задачи":[first.task.join(", "),second.task.join(", ")]};
+  $("compareTable").innerHTML=Object.keys(rows).map(k=>`<div class="row"><div class="cell label">${k}</div><div class="cell">${rows[k][0]}</div><div class="cell">${rows[k][1]}</div></div>`).join("");
+}
+function openDetails(t){
+  $("modalTitle").textContent=t.name;
+  $("modalDesc").textContent=t.desc;
+  $("modalRating").textContent="⭐ "+t.rating;
+  $("modalPrice").textContent=t.price;
+  $("modalLevel").textContent=t.level;
+  $("modalTags").innerHTML=[...t.audience,...t.task].map(x=>`<span class="tag">${x}</span>`).join("");
+  $("modalLink").href=t.url;
+  $("modalCompareBtn").onclick=()=>{$("compareA").value=t.name;renderCompare();hideModal();$("compare").scrollIntoView({behavior:"smooth"})};
+  $("modal").classList.add("active");
+}
+function hideModal(){$("modal").classList.remove("active")}
+function showQuizStep(){
+  document.querySelectorAll(".quiz-step").forEach(s=>s.classList.toggle("active",Number(s.dataset.step)===quizStep));
+  $("quizBack").style.display=quizStep>0?"inline-flex":"none";
+}
+function renderQuizResult(){
+  let arr=tools.filter(t=>{
+    const a=!quizState.audience||t.audience.includes(quizState.audience);
+    const task=!quizState.task||t.task.includes(quizState.task);
+    const level=!quizState.level||quizState.level==="Любой"||t.level===quizState.level;
+    const price=!quizState.price||t.price.toLowerCase().includes(quizState.price);
+    return a&&task&&level&&price;
+  });
+  if(!arr.length)arr=tools.filter(t=>(!quizState.audience||t.audience.includes(quizState.audience))||(!quizState.task||t.task.includes(quizState.task)));
+  arr=arr.sort((a,b)=>b.rating-a.rating).slice(0,3);
+  $("quizResult").innerHTML=`<h3>Ваш AI-набор</h3>${arr.map(resultHTML).join("")}`;
+}
+document.querySelectorAll(".option").forEach(btn=>{
+  btn.onclick=()=>{
+    const step=btn.closest(".quiz-step");
+    step.querySelectorAll(".option").forEach(x=>x.classList.remove("active"));
+    btn.classList.add("active");
+    quizState[btn.dataset.key]=btn.dataset.value;
+    if(quizStep<2){quizStep++;showQuizStep()}else renderQuizResult();
+  };
+});
+$("mobileBtn").onclick=()=>$("topbar").classList.toggle("open");
+$("quizBack").onclick=()=>{quizStep=Math.max(0,quizStep-1);showQuizStep()};
+$("quizReset").onclick=()=>{quizStep=0;for(const k in quizState)delete quizState[k];document.querySelectorAll(".option").forEach(x=>x.classList.remove("active"));$("quizResult").innerHTML="";showQuizStep()};
+$("showAllToolsBtn").onclick=()=>{showAll=!showAll;renderCards()};
+$("sortSelect").onchange=()=>{showAll=false;renderCards()};
+$("searchInput").oninput=()=>{showAll=false;renderCards()};
+$("liveSearchInput").oninput=renderLiveSearch;
+$("compareSwap").onclick=()=>{const a=$("compareA"),b=$("compareB"),tmp=a.value;a.value=b.value;b.value=tmp;renderCompare()};
+$("closeModal").onclick=hideModal;
+$("modal").onclick=e=>{if(e.target===$("modal"))hideModal()};
+document.addEventListener("click",e=>{
+  const btn=e.target.closest("[data-open]");
+  const collection=e.target.closest("[data-collection]");
+  if(btn){const t=tools.find(x=>x.name===btn.dataset.open);if(t)openDetails(t)}
+  if(collection){activeAudience=collection.dataset.collection;showAll=false;renderFilters();renderCards();$("catalog").scrollIntoView({behavior:"smooth"})}
+});
+document.addEventListener("mousemove",e=>{
+  document.body.style.setProperty("--mx",Math.round(e.clientX/window.innerWidth*100)+"%");
+  document.body.style.setProperty("--my",Math.round(e.clientY/window.innerHeight*100)+"%");
+  document.querySelectorAll(".panel,.card").forEach(el=>{
+    const r=el.getBoundingClientRect();
+    if(e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom){
+      el.style.setProperty("--x",(e.clientX-r.left)+"px");
+      el.style.setProperty("--y",(e.clientY-r.top)+"px");
+    }
+  });
+});
+renderFilters();renderFeatured();renderCards();renderLiveSearch();fillCompare();
+</script>
+</body>
+</html>
