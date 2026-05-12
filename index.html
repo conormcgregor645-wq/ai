@@ -11,7 +11,7 @@
   <meta name="theme-color" content="#8d3dff" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2303020a'/%3E%3Ctext x='50%25' y='56%25' text-anchor='middle' font-size='32' fill='%23e13dff'%3EAI%3C/text%3E%3C/svg%3E" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+    
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
     :root{
@@ -30,7 +30,7 @@
     body{
       min-height:100vh;
       overflow-x:hidden;
-      font-family:'Inter',Arial,Helvetica,sans-serif;
+      font-family:Arial,Helvetica,sans-serif;
       color:var(--text);
       background:#03020a;
     }
@@ -423,79 +423,7 @@
     .footer p,.footer a{color:#c1b7d4;line-height:1.65;text-decoration:none;font-size:14px}
     .footer a:hover{color:white}
     .footer-links{display:grid;gap:7px}
-
-    .card,.section-box,.stats,.hero-search input{
-      will-change:transform;
-    }
-    .card{
-      position:relative;
-      overflow:hidden;
-    }
-    .card:before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:radial-gradient(circle at var(--mx,50%) var(--my,30%),rgba(216,60,255,.16),transparent 34%);
-      opacity:0;
-      transition:.25s;
-      pointer-events:none;
-    }
-    .card:hover:before{opacity:1}
-    .card:hover .icon,.card:hover .tool-logo{
-      transform:scale(1.06) rotate(-2deg);
-      box-shadow:0 0 34px rgba(216,60,255,.28);
-    }
-    .icon,.tool-logo{transition:.25s}
-    .hero-inner{
-      transform:translate3d(calc(var(--px,0) * 1px),calc(var(--py,0) * 1px),0);
-      transition:transform .15s ease-out;
-    }
-    .premium-orb{
-      position:fixed;
-      width:280px;
-      height:280px;
-      border-radius:50%;
-      pointer-events:none;
-      z-index:-1;
-      left:var(--orb-x,50%);
-      top:var(--orb-y,40%);
-      transform:translate(-50%,-50%);
-      background:radial-gradient(circle,rgba(216,60,255,.16),transparent 64%);
-      filter:blur(20px);
-      transition:left .25s ease-out,top .25s ease-out;
-    }
-    .catalog-card{
-      min-height:245px;
-    }
-    .catalog-card h3{
-      letter-spacing:-.02em;
-    }
-    .footer-note{
-      text-align:center;
-      color:#c1b7d4;
-      padding:22px 0 34px;
-      font-size:14px;
-      opacity:.85;
-    }
-    .neural-page-note{
-      display:none;
-      position:fixed;
-      right:18px;
-      bottom:18px;
-      z-index:80;
-      max-width:320px;
-      padding:16px;
-      border:1px solid rgba(216,60,255,.22);
-      border-radius:18px;
-      background:rgba(12,8,29,.82);
-      backdrop-filter:blur(16px);
-      box-shadow:0 22px 70px rgba(0,0,0,.32);
-      color:#fff;
-    }
-    .neural-page-note.active{display:block}
-    .neural-page-note p{color:#c1b7d4;margin-top:6px;line-height:1.45;font-size:14px}
-
-    @media(max-width:1150px){
+@media(max-width:1150px){
       .use-grid{grid-template-columns:repeat(2,1fr)}
       .footer{grid-template-columns:1fr 1fr}
     }
@@ -578,6 +506,77 @@
     }
     .neural-page-note.active{display:block}
     .neural-page-note p{color:#c1b7d4;margin-top:6px;line-height:1.45;font-size:14px}
+
+
+    .compare-selects{
+      align-items:center;
+    }
+    .compare-summary{
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      margin-bottom:16px;
+    }
+    .compare-score{
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:16px;
+      background:rgba(12,8,29,.50);
+      padding:16px;
+    }
+    .compare-score h4{
+      margin-bottom:10px;
+      font-size:16px;
+    }
+    .score-line{
+      height:10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      overflow:hidden;
+      margin:8px 0 12px;
+    }
+    .score-line span{
+      display:block;
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg,#813dff,#d83cff);
+    }
+    .compare-card{
+      min-height:185px;
+    }
+    .compare-card .compare-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:12px;
+    }
+    .compare-card .compare-meta span{
+      padding:7px 9px;
+      border-radius:999px;
+      background:rgba(139,61,255,.16);
+      color:#e1d2ff;
+      font-size:12px;
+      font-weight:850;
+    }
+    .winner{
+      color:#afffd9!important;
+      font-weight:950;
+    }
+    .compare-advice{
+      position:relative;
+      z-index:1;
+      margin-top:16px;
+      padding:18px;
+      border:1px solid rgba(216,60,255,.18);
+      border-radius:18px;
+      background:rgba(139,61,255,.10);
+      color:#efe8ff;
+      line-height:1.55;
+    }
+    @media(max-width:760px){
+      .compare-summary{grid-template-columns:1fr}
+    }
 
     @media(max-width:1150px){
       .categories,.tools{grid-template-columns:repeat(3,1fr)}
@@ -666,8 +665,10 @@
           <button class="swap" id="swapBtn">⇄</button>
           <select class="select" id="compareB"></select>
         </div>
+        <div class="compare-summary" id="compareSummary"></div>
         <div class="compare-preview" id="comparePreview"></div>
         <div class="compare-table" id="compareTable"></div>
+        <div class="compare-advice" id="compareAdvice"></div>
       </div>
     </section>
 
@@ -733,17 +734,10 @@
       <div class="modal-top"><div><h2 id="modalTitle"></h2><p id="modalDesc" style="color:#c1b7d4;line-height:1.55;margin-top:8px"></p></div><button class="close" id="closeModal">×</button></div>
       <div class="modal-stats"><div class="modal-stat"><small>Рейтинг</small><br><b id="modalRating"></b></div><div class="modal-stat"><small>Цена</small><br><b id="modalPrice"></b></div><div class="modal-stat"><small>Сложность</small><br><b id="modalLevel"></b></div></div>
       <div class="chips" id="modalTags"></div>
-      <div class="actions" style="justify-content:flex-start"><a class="btn secondary" id="modalLink" target="_blank" rel="noreferrer">Открыть сервис</a><button class="btn" id="modalCompare">Сравнить</button><button class="btn secondary" data-page-note="true">Страница нейросети</button></div>
+      <div class="actions" style="justify-content:flex-start"><a class="btn secondary" id="modalLink" target="_blank" rel="noreferrer">Открыть сервис</a><button class="btn" id="modalCompare">Сравнить</button></div>
     </div>
   </div>
-
-  <div class="premium-orb" id="premiumOrb"></div>
-  <div class="neural-page-note" id="pageNote">
-    <strong>Страница нейросети</strong>
-    <p>Позже сюда можно добавить отдельные страницы с описанием, плюсами, минусами и примерами.</p>
-  </div>
-
-  <nav class="bottom-nav"><a href="#home">Главная</a><a href="#catalog">Каталог</a><a href="#compare">Compare</a></nav>
+<nav class="bottom-nav"><a href="#home">Главная</a><a href="#catalog">Каталог</a><a href="#compare">Compare</a></nav>
 
   <script>
     const audiences=["Все","Студенты","Блогеры","Бизнес","Работа","Разработчики","Дизайнеры","Маркетинг"];
@@ -817,9 +811,66 @@
     }
     function renderCompare(){
       const first=tools.find(t=>t.name===$("compareA").value),second=tools.find(t=>t.name===$("compareB").value);
-      $("comparePreview").innerHTML=[first,second].map(t=>`<div class="compare-card"><div class="icon">${t.short}</div><h3 style="margin:12px 0 8px">${t.name}</h3><p>${t.desc}</p></div>`).join("");
-      const rows={"Рейтинг":[first.rating,second.rating],"Цена":[first.price,second.price],"Сложность":[first.level,second.level],"Задачи":[first.task.join(", "),second.task.join(", ")]};
-      $("compareTable").innerHTML=Object.keys(rows).map(k=>`<div class="row"><div class="cell label">${k}</div><div class="cell">${rows[k][0]}</div><div class="cell">${rows[k][1]}</div></div>`).join("");
+      const score=t=>{
+        let s=t.rating*18;
+        if(t.price.includes("бесплат"))s+=8;
+        if(t.level==="Новичок")s+=6;
+        if(t.popular)s+=4;
+        return Math.min(100,Math.round(s));
+      };
+      const s1=score(first),s2=score(second);
+      const winner=s1===s2?null:(s1>s2?first:second);
+
+      $("compareSummary").innerHTML=[first,second].map(t=>{
+        const s=score(t);
+        return `<div class="compare-score">
+          <h4>${t.name}</h4>
+          <div class="score-line"><span style="width:${s}%"></span></div>
+          <p style="color:#c1b7d4">Общий балл: <b>${s}/100</b></p>
+        </div>`;
+      }).join("");
+
+      $("comparePreview").innerHTML=[first,second].map(t=>`<div class="compare-card">
+        <div class="icon">${t.short}</div>
+        <h3 style="margin:12px 0 8px">${t.name}</h3>
+        <p>${t.desc}</p>
+        <div class="compare-meta">
+          <span>⭐ ${t.rating}</span>
+          <span>${t.price}</span>
+          <span>${t.level}</span>
+        </div>
+      </div>`).join("");
+
+      const betterRating=first.rating===second.rating?"Одинаково":(first.rating>second.rating?first.name:second.name);
+      const betterPrice=first.price===second.price?"Одинаково":(first.price.includes("бесплат")&&!second.price.includes("бесплат")?first.name:(!first.price.includes("бесплат")&&second.price.includes("бесплат")?second.name:"Зависит от тарифа"));
+      const betterLevel=first.level===second.level?"Одинаково":(first.level==="Новичок"?first.name:(second.level==="Новичок"?second.name:"Зависит от опыта"));
+      const commonTasks=first.task.filter(x=>second.task.includes(x));
+      const uniqueFirst=first.task.filter(x=>!second.task.includes(x));
+      const uniqueSecond=second.task.filter(x=>!first.task.includes(x));
+
+      const rows={
+        "Рейтинг":[first.rating,second.rating,betterRating],
+        "Цена":[first.price,second.price,betterPrice],
+        "Сложность":[first.level,second.level,betterLevel],
+        "Основные задачи":[first.task.join(", "),second.task.join(", "),commonTasks.length?`Общие: ${commonTasks.join(", ")}`:"Задачи разные"],
+        "Для кого":[first.audience.join(", "),second.audience.join(", "),"Выбирайте по вашей роли"],
+        "Уникально":[uniqueFirst.join(", ")||"—",uniqueSecond.join(", ")||"—","Различия по сценариям"]
+      };
+
+      $("compareTable").innerHTML=Object.keys(rows).map(k=>`<div class="row">
+        <div class="cell label">${k}</div>
+        <div class="cell ${rows[k][2]===first.name?"winner":""}">${rows[k][0]}</div>
+        <div class="cell ${rows[k][2]===second.name?"winner":""}">${rows[k][1]}</div>
+      </div>`).join("");
+
+      let advice;
+      if(!winner){
+        advice=`<b>Итог:</b> ${first.name} и ${second.name} примерно равны по общей оценке. Выбирайте по конкретной задаче: ${first.name} лучше для “${first.task[0]}”, а ${second.name} — для “${second.task[0]}”.`;
+      }else{
+        const loser=winner.name===first.name?second:first;
+        advice=`<b>Итог:</b> для большинства пользователей лучше подойдёт <b>${winner.name}</b>. Он выглядит сильнее по общей оценке, но <b>${loser.name}</b> всё равно может быть удобнее, если ваша задача — ${loser.task.slice(0,2).join(" или ")}.`;
+      }
+      $("compareAdvice").innerHTML=advice;
     }
     function openModal(t){
       $("modalTitle").textContent=t.name;$("modalDesc").textContent=t.desc;$("modalRating").textContent="⭐ "+t.rating;$("modalPrice").textContent=t.price;$("modalLevel").textContent=t.level;
@@ -845,37 +896,7 @@
       if(cat){activeTask=cat.dataset.cat;showAll=false;renderFilters();renderCatalog();$("catalog").scrollIntoView({behavior:"smooth"})}
       if(use){activeTask=use.dataset.useTask;showAll=false;renderFilters();renderCatalog();$("catalog").scrollIntoView({behavior:"smooth"})}
     });
-
-    document.addEventListener("mousemove",e=>{
-      const x=e.clientX/window.innerWidth-.5;
-      const y=e.clientY/window.innerHeight-.5;
-      document.documentElement.style.setProperty("--orb-x",`${e.clientX}px`);
-      document.documentElement.style.setProperty("--orb-y",`${e.clientY}px`);
-      const hero=document.querySelector(".hero-inner");
-      if(hero){
-        hero.style.setProperty("--px",(-x*8).toFixed(2));
-        hero.style.setProperty("--py",(-y*8).toFixed(2));
-      }
-      document.querySelectorAll(".card").forEach(card=>{
-        const r=card.getBoundingClientRect();
-        if(e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom){
-          card.style.setProperty("--mx",(e.clientX-r.left)+"px");
-          card.style.setProperty("--my",(e.clientY-r.top)+"px");
-        }
-      });
-    });
-
-    document.addEventListener("click",e=>{
-      const link=e.target.closest("[data-page-note]");
-      if(link){
-        const note=$("pageNote");
-        note.classList.add("active");
-        setTimeout(()=>note.classList.remove("active"),3200);
-      }
-    });
-
-    renderFilters();renderCatalog();fillCompare();
+renderFilters();renderCatalog();fillCompare();
   </script>
-  <!-- Analytics placeholder: сюда можно добавить Google Analytics / Yandex Metrica -->
 </body>
 </html>
