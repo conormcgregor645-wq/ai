@@ -651,6 +651,82 @@ body.light p,
       .top-tools,
 }
 
+
+    html{scroll-behavior:smooth}
+    body{-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    .section-box,.card,.compare-score,.compare-advice{
+      backdrop-filter:blur(18px);
+      box-shadow:0 10px 30px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.04)
+    }
+    .card{
+      transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease
+    }
+    .card:hover{
+      transform:translateY(-5px);
+      border-color:rgba(216,60,255,.28);
+      box-shadow:0 18px 50px rgba(0,0,0,.28),0 0 40px rgba(216,60,255,.08)
+    }
+    .btn,.mini,.smart-btn{
+      transition:transform .18s ease,box-shadow .18s ease
+    }
+    .btn:hover,.mini:hover,.smart-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 10px 30px rgba(139,61,255,.25)
+    }
+    .hero h1{
+      letter-spacing:-.04em;
+      line-height:.94
+    }
+    .hero p{
+      line-height:1.7;
+      color:#c9c2da
+    }
+    .topbar{
+      backdrop-filter:blur(14px);
+      background:rgba(7,5,18,.42)
+    }
+    .reveal{
+      opacity:0;
+      transform:translateY(18px);
+      transition:opacity .6s ease,transform .6s ease
+    }
+    .reveal.show{
+      opacity:1;
+      transform:none
+    }
+    .glow-bg{
+      position:fixed;
+      inset:0;
+      z-index:-5;
+      pointer-events:none;
+      overflow:hidden
+    }
+    .glow-bg:before,.glow-bg:after{
+      content:"";
+      position:absolute;
+      width:44vw;
+      height:44vw;
+      border-radius:50%;
+      filter:blur(80px);
+      opacity:.18;
+      animation:floatGlow 18s ease-in-out infinite alternate
+    }
+    .glow-bg:before{
+      left:-10vw;
+      top:10vh;
+      background:#7b4dff
+    }
+    .glow-bg:after{
+      right:-12vw;
+      bottom:-10vh;
+      background:#d83cff;
+      animation-duration:22s
+    }
+    @keyframes floatGlow{
+      from{transform:translateY(0) scale(1)}
+      to{transform:translateY(-30px) scale(1.08)}
+    }
+
     @media(max-width:1150px){
       .categories,.tools{grid-template-columns:repeat(3,1fr)}
       .catalog-layout{grid-template-columns:1fr}.sidebar{position:relative;top:0}.planet-right{opacity:.55}
@@ -675,6 +751,7 @@ body.light p,
   </style>
 </head>
 <body class="fade-page">
+  <div class="glow-bg"></div>
   <button class="theme-toggle" id="themeToggle">◐</button>
   <div class="premium-bg">
     <div class="aurora a1"></div>
@@ -722,6 +799,7 @@ body.light p,
           <span>⌕</span>
           <input id="heroSearch" placeholder="Поиск нейросетей..." />
         </div>
+<div class="live-results" id="liveResults"></div>
         <div class="stats">
           <div class="stat"><div><b>🔥 50+</b><small>Инструментов</small></div></div>
           <div class="stat"><div><b>🏷 12</b><small>Категорий</small></div></div>
@@ -732,7 +810,7 @@ body.light p,
     </section>
 
     <section id="compare">
-      <div class="section-box">
+      <div class="section-box reveal">
         <div class="section-head"><h2>⇄ Сравнение инструментов</h2><p style="color:#c1b7d4">Сравните цену, рейтинг, задачи и сложность.</p></div>
         <div class="compare-selects">
           <select class="select" id="compareA"></select>
@@ -757,7 +835,7 @@ body.light p,
           <div class="side-label">Задача</div>
           <div class="filters" id="taskFilters"></div>
         </aside>
-        <main class="section-box">
+        <main class="section-box reveal">
           <div class="catalog-top">
             <div><h2>AI-инструменты</h2><p style="color:#c1b7d4;margin-top:8px">Найдено: <span id="counter">0</span></p></div>
             <select class="select" id="sortSelect"><option value="default">Сначала все</option><option value="rating">По рейтингу</option><option value="free">Сначала бесплатные</option><option value="easy">Для новичков</option></select>
@@ -770,7 +848,7 @@ body.light p,
     </section>
 
     <section id="about">
-      <div class="section-box">
+      <div class="section-box reveal">
         <div class="section-head"><h2>О проекте</h2><p>AI для обычных дел помогает быстро находить нейросети под реальные задачи: работу, учёбу, творчество и бизнес.</p></div>
       </div>
     </section>
@@ -836,9 +914,9 @@ body.light p,
     function toolCard(t,compact=false){
       const priceClass=t.price.includes("бесплат") ? "price-free" : "price-paid";
       if(compact){
-        return `<article class="card tool"><div class="tool-logo">${t.short}</div><h3>${t.name}</h3><p>${t.desc}</p><span class="rating">⭐ ${t.rating}</span></article>`;
+        return `<article class="card reveal tool"><div class="tool-logo">${t.short}</div><h3>${t.name}</h3><p>${t.desc}</p><span class="rating">⭐ ${t.rating}</span></article>`;
       }
-      return `<article class="card catalog-card"><div style="display:flex;justify-content:space-between;gap:14px"><div><h3>${t.name}</h3><p>${t.desc}</p></div><div class="tool-logo">${t.short}</div></div><div class="chips"><span class="chip">⭐ ${t.rating}</span><span class="chip ${priceClass}">${t.price}</span><span class="chip">${t.level}</span></div><div class="chips">${[...t.audience,...t.task].map(x=>`<span class="chip">${x}</span>`).join("")}</div><div><a class="mini" href="${t.url}" target="_blank" rel="noreferrer">Открыть</a> <button class="mini primary" data-open="${t.name}">Подробнее</button></div></article>`;
+      return `<article class="card reveal catalog-card"><div style="display:flex;justify-content:space-between;gap:14px"><div><h3>${t.name}</h3><p>${t.desc}</p></div><div class="tool-logo">${t.short}</div></div><div class="chips"><span class="chip">⭐ ${t.rating}</span><span class="chip ${priceClass}">${t.price}</span><span class="chip">${t.level}</span></div><div class="chips">${[...t.audience,...t.task].map(x=>`<span class="chip">${x}</span>`).join("")}</div><div><a class="mini" href="${t.url}" target="_blank" rel="noreferrer">Открыть</a> <button class="mini primary" data-open="${t.name}">Подробнее</button></div></article>`;
     }
     
     
@@ -970,7 +1048,26 @@ body.light p,
       if(cat){activeTask=cat.dataset.cat;showAll=false;renderFilters();renderCatalog();$("catalog").scrollIntoView({behavior:"smooth"})}
       if(use){activeTask=use.dataset.useTask;showAll=false;renderFilters();renderCatalog();$("catalog").scrollIntoView({behavior:"smooth"})}
     });
-renderFilters();renderCatalog();fillCompare();
-  </script>
+
+    document.addEventListener("click",e=>{
+      const lr=document.getElementById("liveResults");
+      if(lr && !e.target.closest(".hero-search") && !e.target.closest("#liveResults")){
+        lr.classList.remove("active");
+      }
+    });
+    
+    renderFilters();renderCatalog();fillCompare();
+  
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("show");
+    }
+  });
+},{threshold:.12});
+
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+</script>
 </body>
 </html>
