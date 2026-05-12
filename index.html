@@ -423,6 +423,96 @@
     .footer p,.footer a{color:#c1b7d4;line-height:1.65;text-decoration:none;font-size:14px}
     .footer a:hover{color:white}
     .footer-links{display:grid;gap:7px}
+
+.cursor-glow{
+  position:fixed;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9999;
+  background:radial-gradient(circle,rgba(216,60,255,.35),transparent 70%);
+  transform:translate(-50%,-50%);
+  filter:blur(8px);
+}
+.svg-icon{
+  width:54px;
+  height:54px;
+  border-radius:16px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,rgba(129,61,255,.22),rgba(216,60,255,.12));
+  border:1px solid rgba(255,255,255,.06);
+}
+.svg-icon svg{
+  width:28px;
+  height:28px;
+  stroke:#fff;
+  fill:none;
+  stroke-width:2;
+}
+.command{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:flex-start;
+  justify-content:center;
+  padding-top:14vh;
+  background:rgba(0,0,0,.45);
+  backdrop-filter:blur(12px);
+  z-index:120;
+}
+.command.active{display:flex}
+.command-box{
+  width:min(700px,92%);
+  border-radius:24px;
+  border:1px solid rgba(216,60,255,.18);
+  background:rgba(12,8,29,.95);
+  overflow:hidden;
+  box-shadow:0 40px 100px rgba(0,0,0,.45);
+}
+.command-box input{
+  width:100%;
+  height:68px;
+  border:none;
+  outline:none;
+  background:transparent;
+  color:white;
+  padding:0 22px;
+  font-size:18px;
+}
+.command-results{
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.command-item{
+  padding:16px 22px;
+  cursor:pointer;
+}
+.command-item:hover{
+  background:rgba(139,61,255,.14);
+}
+.skeleton{
+  position:relative;
+  overflow:hidden;
+}
+.skeleton:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  transform:translateX(-100%);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);
+  animation:skeleton 1.6s infinite;
+}
+@keyframes skeleton{
+  100%{transform:translateX(100%)}
+}
+.compare-score .score-line span{
+  animation:growBar 1s ease;
+}
+@keyframes growBar{
+  from{width:0!important}
+}
+
 @media(max-width:1150px){
       .use-grid{grid-template-columns:repeat(2,1fr)}
       .footer{grid-template-columns:1fr 1fr}
@@ -727,7 +817,97 @@ body.light p,
       to{transform:translateY(-30px) scale(1.08)}
     }
 
-    @media(max-width:1150px){
+    
+.cursor-glow{
+  position:fixed;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9999;
+  background:radial-gradient(circle,rgba(216,60,255,.35),transparent 70%);
+  transform:translate(-50%,-50%);
+  filter:blur(8px);
+}
+.svg-icon{
+  width:54px;
+  height:54px;
+  border-radius:16px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,rgba(129,61,255,.22),rgba(216,60,255,.12));
+  border:1px solid rgba(255,255,255,.06);
+}
+.svg-icon svg{
+  width:28px;
+  height:28px;
+  stroke:#fff;
+  fill:none;
+  stroke-width:2;
+}
+.command{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:flex-start;
+  justify-content:center;
+  padding-top:14vh;
+  background:rgba(0,0,0,.45);
+  backdrop-filter:blur(12px);
+  z-index:120;
+}
+.command.active{display:flex}
+.command-box{
+  width:min(700px,92%);
+  border-radius:24px;
+  border:1px solid rgba(216,60,255,.18);
+  background:rgba(12,8,29,.95);
+  overflow:hidden;
+  box-shadow:0 40px 100px rgba(0,0,0,.45);
+}
+.command-box input{
+  width:100%;
+  height:68px;
+  border:none;
+  outline:none;
+  background:transparent;
+  color:white;
+  padding:0 22px;
+  font-size:18px;
+}
+.command-results{
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.command-item{
+  padding:16px 22px;
+  cursor:pointer;
+}
+.command-item:hover{
+  background:rgba(139,61,255,.14);
+}
+.skeleton{
+  position:relative;
+  overflow:hidden;
+}
+.skeleton:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  transform:translateX(-100%);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);
+  animation:skeleton 1.6s infinite;
+}
+@keyframes skeleton{
+  100%{transform:translateX(100%)}
+}
+.compare-score .score-line span{
+  animation:growBar 1s ease;
+}
+@keyframes growBar{
+  from{width:0!important}
+}
+
+@media(max-width:1150px){
       .categories,.tools{grid-template-columns:repeat(3,1fr)}
       .catalog-layout{grid-template-columns:1fr}.sidebar{position:relative;top:0}.planet-right{opacity:.55}
     }
@@ -750,7 +930,20 @@ body.light p,
     }
   </style>
 </head>
+
 <body class="fade-page">
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<div class="command" id="command">
+  <div class="command-box">
+    <input id="commandInput" placeholder="Поиск AI, переходы, команды..." />
+    <div class="command-results" id="commandResults">
+      <div class="command-item" data-go="#catalog">Открыть каталог</div>
+      <div class="command-item" data-go="#compare">Открыть сравнение</div>
+    </div>
+  </div>
+</div>
+
   <div class="glow-bg"></div>
   <button class="theme-toggle" id="themeToggle">◐</button>
   <div class="premium-bg">
@@ -983,7 +1176,7 @@ body.light p,
       }).join("");
 
       $("comparePreview").innerHTML=[first,second].map(t=>`<div class="compare-card">
-        <div class="icon">${t.short}</div>
+        <div class="svg-icon">${t.short}</div>
         <h3 style="margin:12px 0 8px">${t.name}</h3>
         <p>${t.desc}</p>
         <div class="compare-meta">
@@ -1067,6 +1260,45 @@ const observer=new IntersectionObserver(entries=>{
 },{threshold:.12});
 
 document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+
+const glow=document.getElementById("cursorGlow");
+document.addEventListener("mousemove",e=>{
+  glow.style.left=e.clientX+"px";
+  glow.style.top=e.clientY+"px";
+});
+
+document.addEventListener("keydown",e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){
+    e.preventDefault();
+    $("command").classList.add("active");
+    $("commandInput").focus();
+  }
+  if(e.key==="Escape"){
+    $("command").classList.remove("active");
+  }
+});
+
+document.addEventListener("click",e=>{
+  const go=e.target.closest("[data-go]");
+  if(go){
+    document.querySelector(go.dataset.go)?.scrollIntoView({behavior:"smooth"});
+    $("command").classList.remove("active");
+  }
+});
+
+$("commandInput").addEventListener("input",e=>{
+  const q=e.target.value.toLowerCase();
+  const found=tools.filter(t=>t.name.toLowerCase().includes(q)).slice(0,5);
+  $("commandResults").innerHTML=found.map(t=>`<div class="command-item" data-open="${t.name}">${t.name}</div>`).join("") || '<div class="command-item">Ничего не найдено</div>';
+});
+
+window.addEventListener("load",()=>{
+  document.querySelectorAll(".catalog-card").forEach(c=>c.classList.add("skeleton"));
+  setTimeout(()=>{
+    document.querySelectorAll(".skeleton").forEach(c=>c.classList.remove("skeleton"));
+  },900);
+});
 
 </script>
 </body>
