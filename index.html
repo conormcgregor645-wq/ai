@@ -513,29 +513,6 @@
       </div>
     </section>
 
-    <section id="usecases">
-      <div class="section-box">
-        <div class="section-head">
-          <h2>⚡ Лучшие нейросети для...</h2>
-          <a class="ghost" href="#catalog">Подобрать в каталоге →</a>
-        </div>
-        <div class="use-grid">
-          <article class="use-card" data-use-task="Тексты"><div class="icon">💼</div><h3>Работы</h3><p>Письма, документы, идеи, планы и быстрые ответы.</p></article>
-          <article class="use-card" data-use-task="Учёба"><div class="icon">📚</div><h3>Учёбы</h3><p>Объяснение тем, конспекты, презентации и подготовка.</p></article>
-          <article class="use-card" data-use-task="Изображения"><div class="icon">🎨</div><h3>Дизайна</h3><p>Визуалы, референсы, концепты, посты и обложки.</p></article>
-          <article class="use-card" data-use-task="Видео"><div class="icon">🎬</div><h3>Видео</h3><p>Ролики, монтаж, сценарии, озвучка и креативы.</p></article>
-          <article class="use-card" data-use-task="Код"><div class="icon">&lt;/&gt;</div><h3>Кода</h3><p>Разработка, исправление ошибок, тесты и прототипы.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section id="popular">
-      <div class="section-box">
-        <div class="section-head"><h2>🔥 Популярные инструменты</h2><a class="ghost" href="#catalog">Смотреть все инструменты →</a></div>
-        <div class="tools" id="popularTools"></div>
-      </div>
-    </section>
-
     <section id="compare">
       <div class="section-box">
         <div class="section-head"><h2>⇄ Сравнение инструментов</h2><p style="color:#c1b7d4">Сравните цену, рейтинг, задачи и сложность.</p></div>
@@ -645,9 +622,7 @@
       return `<article class="card catalog-card"><div style="display:flex;justify-content:space-between;gap:14px"><div><h3>${t.name}</h3><p>${t.desc}</p></div><div class="tool-logo">${t.short}</div></div><div class="chips"><span class="chip">⭐ ${t.rating}</span><span class="chip ${priceClass}">${t.price}</span><span class="chip">${t.level}</span></div><div class="chips">${[...t.audience,...t.task].map(x=>`<span class="chip">${x}</span>`).join("")}</div><div><a class="mini" href="${t.url}" target="_blank" rel="noreferrer">Открыть</a> <button class="mini primary" data-open="${t.name}">Подробнее</button></div></article>`;
     }
     
-    function renderPopular(){
-      $("popularTools").innerHTML=tools.filter(t=>t.popular).slice(0,6).map(t=>toolCard(t,true)).join("");
-    }
+    
     
     
     function renderFilters(){
@@ -719,7 +694,7 @@
       if(cat){activeTask=cat.dataset.cat;showAll=false;renderFilters();renderCatalog();$("catalog").scrollIntoView({behavior:"smooth"})}
       if(use){activeTask=use.dataset.useTask;showAll=false;renderFilters();renderCatalog();$("catalog").scrollIntoView({behavior:"smooth"})}
     });
-    renderPopular();renderFilters();renderCatalog();fillCompare();
+    renderFilters();renderCatalog();fillCompare();
   </script>
 </body>
 </html>
