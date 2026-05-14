@@ -929,55 +929,141 @@ body.light p,
       .bottom-nav a{text-align:center;text-decoration:none;padding:9px 4px;border-radius:12px;background:rgba(139,61,255,.13);font-size:12px;font-weight:850}
     }
   
-/* ===== PREMIUM HERO BACKGROUND RESTORE ===== */
+/* ===== IMPROVED PREMIUM COSMIC BACKGROUND ===== */
+body{
+  background:#03020a!important;
+}
+
+.premium-cosmos-bg{
+  position:fixed;
+  inset:0;
+  z-index:-50;
+  overflow:hidden;
+  pointer-events:none;
+  background:#03020a;
+}
+
+.cosmos-image-layer{
+  position:absolute;
+  inset:-4%;
+  background:
+    linear-gradient(180deg,rgba(3,2,10,.16),rgba(3,2,10,.60) 72%,#03020a 100%),
+    url("cosmos-premium.png") center/cover no-repeat;
+  transform:scale(1.04);
+  filter:saturate(1.18) contrast(1.06) brightness(.86);
+  animation:premiumCosmosPan 24s ease-in-out infinite alternate;
+}
+
+.cosmos-depth-layer{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 50% 34%,rgba(255,255,255,.05),transparent 24%),
+    radial-gradient(circle at 18% 42%,rgba(216,60,255,.14),transparent 32%),
+    radial-gradient(circle at 86% 34%,rgba(126,92,255,.12),transparent 30%),
+    linear-gradient(180deg,rgba(3,2,10,.12),rgba(3,2,10,.50) 78%,#03020a 100%);
+  mix-blend-mode:screen;
+  opacity:.72;
+}
+
+.cosmos-stars-layer{
+  position:absolute;
+  inset:-20%;
+  background-image:
+    radial-gradient(circle,rgba(255,255,255,.95) 1px,transparent 1.7px),
+    radial-gradient(circle,rgba(210,150,255,.75) 1px,transparent 1.6px),
+    radial-gradient(circle,rgba(130,170,255,.60) 1px,transparent 1.6px);
+  background-size:150px 150px,260px 260px,420px 420px;
+  opacity:.36;
+  animation:premiumStarsDrift 130s linear infinite;
+}
+
+.cosmos-shooting-star{
+  position:absolute;
+  width:240px;
+  height:2px;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),rgba(225,61,255,.78),transparent);
+  filter:drop-shadow(0 0 12px rgba(225,61,255,.75));
+  transform:rotate(-28deg) translateX(-260px);
+  opacity:0;
+}
+
+.star-one{
+  left:18%;
+  top:18%;
+  animation:premiumShoot 8s ease-in-out infinite 1.2s;
+}
+
+.star-two{
+  left:66%;
+  top:28%;
+  animation:premiumShoot 11s ease-in-out infinite 4.5s;
+}
+
+/* Старые фоновые слои не удаляются, но приглушаются, чтобы не было дешёвых фигур */
+.space,
+.premium-bg,
+.glow-bg,
+.cosmos-bg{
+  opacity:.18!important;
+  filter:blur(12px)!important;
+}
+
+/* Hero получает глубину, но не теряет фон */
 .hero{
   position:relative;
   overflow:hidden;
   isolation:isolate;
 }
 
-.hero::before{
+.hero:before{
   content:"";
   position:absolute;
-  inset:0;
-  background:
-    linear-gradient(180deg,rgba(4,2,10,.15),rgba(4,2,10,.55)),
-    url("hero-bg.png") center/cover no-repeat;
-  transform:scale(1.05);
-  animation:heroPan 18s ease-in-out infinite alternate;
-  z-index:-3;
-}
-
-.hero::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(circle at 50% 40%,rgba(255,255,255,.03),transparent 30%),
-    linear-gradient(180deg,transparent 0%,rgba(4,2,10,.55) 72%,#04020a 100%);
+  inset:-2%;
   z-index:-2;
+  background:
+    radial-gradient(circle at 50% 38%,rgba(255,255,255,.045),transparent 26%),
+    radial-gradient(circle at 50% 40%,rgba(216,60,255,.16),transparent 36%),
+    linear-gradient(180deg,rgba(3,2,10,.05),rgba(3,2,10,.48) 84%,#03020a 100%);
+  pointer-events:none;
 }
 
-.space,
-.premium-bg,
-.glow-bg,
-.cosmos-bg{
-  display:none !important;
+.hero:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:linear-gradient(180deg,transparent 0%,rgba(3,2,10,.16) 48%,#03020a 100%);
+  pointer-events:none;
 }
 
-@keyframes heroPan{
-  from{
-    transform:scale(1.05) translate3d(0,0,0);
-  }
-  to{
-    transform:scale(1.1) translate3d(-18px,-10px,0);
-  }
+@keyframes premiumCosmosPan{
+  from{transform:scale(1.04) translate3d(0,0,0)}
+  to{transform:scale(1.10) translate3d(-22px,-12px,0)}
+}
+
+@keyframes premiumStarsDrift{
+  to{transform:translate3d(160px,120px,0)}
+}
+
+@keyframes premiumShoot{
+  0%,72%{opacity:0;transform:rotate(-28deg) translateX(-260px)}
+  80%{opacity:1}
+  100%{opacity:0;transform:rotate(-28deg) translateX(120vw)}
 }
 
 </style>
 </head>
 
 <body class="fade-page">
+  <div class="premium-cosmos-bg" aria-hidden="true">
+    <div class="cosmos-image-layer"></div>
+    <div class="cosmos-depth-layer"></div>
+    <div class="cosmos-stars-layer"></div>
+    <div class="cosmos-shooting-star star-one"></div>
+    <div class="cosmos-shooting-star star-two"></div>
+  </div>
 <div class="cursor-glow" id="cursorGlow"></div>
 
 <div class="command" id="command">
