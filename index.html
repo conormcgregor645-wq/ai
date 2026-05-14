@@ -1219,7 +1219,6 @@ body.light p,
   }
 }
 
-
 /* ===== FINAL COSMIC BACKGROUND LIKE REFERENCE ===== */
 body{
   background:#02030a!important;
@@ -1473,6 +1472,136 @@ body:after{
   .planet-right{width:320px;height:320px;right:-170px;top:190px}
   .cosmos-galaxy{width:170px;height:85px;left:5vw;top:16vh}
   .cosmos-asteroid{opacity:.65}
+}
+
+/* ===== REALISTIC CINEMATIC SPACE ===== */
+.cosmos-bg{
+  background:
+    radial-gradient(circle at 50% 45%, rgba(96,56,180,.10), transparent 22%),
+    radial-gradient(circle at 20% 35%, rgba(172,65,255,.10), transparent 28%),
+    radial-gradient(circle at 80% 20%, rgba(120,80,255,.08), transparent 26%),
+    linear-gradient(180deg,#02030a 0%,#04040d 45%,#020208 100%) !important;
+}
+
+.cosmos-stars{
+  opacity:.95;
+  filter:blur(.15px);
+}
+
+.stars-a{
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.95) .8px, transparent 1.6px),
+    radial-gradient(circle, rgba(190,170,255,.75) .7px, transparent 1.5px),
+    radial-gradient(circle, rgba(255,220,255,.9) 1px, transparent 1.8px);
+  background-size:140px 140px,240px 240px,340px 340px;
+}
+
+.stars-b{
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.55) .7px, transparent 1.4px),
+    radial-gradient(circle, rgba(120,180,255,.45) .8px, transparent 1.5px);
+  background-size:300px 300px,520px 520px;
+}
+
+.cosmos-nebula{
+  filter:blur(80px) saturate(1.2);
+  opacity:.72;
+}
+
+.nebula-left{
+  background:
+    radial-gradient(circle at 40% 50%, rgba(158,62,255,.26), transparent 50%),
+    radial-gradient(circle at 70% 40%, rgba(88,84,255,.14), transparent 54%);
+}
+
+.nebula-right{
+  background:
+    radial-gradient(circle at 60% 50%, rgba(216,60,255,.22), transparent 52%),
+    radial-gradient(circle at 30% 45%, rgba(90,120,255,.14), transparent 56%);
+}
+
+.cosmos-galaxy{
+  width:360px;
+  height:180px;
+  left:8vw;
+  top:10vh;
+  opacity:.92;
+  background:
+    radial-gradient(ellipse at center,
+      rgba(255,255,255,1) 0%,
+      rgba(255,235,245,.98) 6%,
+      rgba(255,145,225,.72) 16%,
+      rgba(156,76,255,.32) 36%,
+      rgba(30,15,60,.06) 62%,
+      transparent 78%);
+  box-shadow:
+    0 0 70px rgba(255,150,240,.34),
+    0 0 160px rgba(120,90,255,.16);
+  filter:blur(.2px);
+}
+
+.cosmos-galaxy:before{
+  border-top:1px solid rgba(255,255,255,.22);
+  opacity:.55;
+}
+
+.cosmos-galaxy:after{
+  border-top:1px solid rgba(255,120,220,.18);
+  opacity:.35;
+}
+
+.planet-left{
+  width:420px;
+  height:420px;
+  left:-220px;
+  top:180px;
+  background:
+    radial-gradient(circle at 72% 34%, rgba(255,255,255,.18), transparent 10%),
+    radial-gradient(circle at 68% 42%, rgba(180,70,255,.16), transparent 30%),
+    linear-gradient(145deg,#12081e 0%,#2d1452 45%,#04030a 85%);
+  box-shadow:
+    inset -80px -80px 140px rgba(0,0,0,.88),
+    inset 40px 20px 90px rgba(255,140,240,.05),
+    0 0 90px rgba(110,70,255,.14);
+  border:none;
+  filter:blur(.2px);
+}
+
+.planet-right{
+  width:760px;
+  height:760px;
+  right:-340px;
+  top:80px;
+  background:
+    radial-gradient(circle at 30% 26%, rgba(255,255,255,.22), transparent 9%),
+    radial-gradient(circle at 34% 36%, rgba(255,110,225,.14), transparent 24%),
+    linear-gradient(145deg,#180b2a 0%,#40105c 42%,#05020a 82%);
+  box-shadow:
+    inset -120px -120px 200px rgba(0,0,0,.90),
+    inset 60px 40px 140px rgba(255,150,240,.04),
+    0 0 120px rgba(180,80,255,.16);
+  border:none;
+  opacity:.95;
+}
+
+.cosmos-moon,
+.cosmos-asteroid{
+  opacity:.45;
+  filter:blur(.3px);
+}
+
+.cosmos-shooting{
+  opacity:.75;
+  filter:drop-shadow(0 0 8px rgba(255,255,255,.75));
+}
+
+.hero{
+  backdrop-filter:none;
+}
+
+.hero:before,
+.hero:after{
+  display:none !important;
 }
 
 </style>
