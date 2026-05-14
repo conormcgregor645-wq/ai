@@ -549,21 +549,6 @@ body{
   transform-origin:center;
 }
 
-.space:after,
-.premium-bg:after{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:-4;
-  pointer-events:none;
-  opacity:.45;
-  background-image:
-    linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
-  background-size:120px 120px;
-  mask-image:radial-gradient(circle at center,black 20%,transparent 85%);
-}
-
 .hero{
   position:relative;
   overflow:hidden;
@@ -745,9 +730,155 @@ body{
     top:36%;
   }
 
-  .space:after,
-  .premium-bg:after{
-    background-size:80px 80px;
+  
+}
+
+/* ===== ULTRA CINEMATIC SPACE BACKGROUND ===== */
+body{
+  background:#020208;
+  overflow-x:hidden;
+}
+
+.space,
+.premium-bg{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at center,#12051f 0%,#05030d 42%,#020208 100%) !important;
+}
+
+.space::before,
+.premium-bg::before{
+  content:"";
+  position:fixed;
+  inset:-10%;
+  z-index:-5;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 20% 30%,rgba(140,92,255,.28),transparent 22%),
+    radial-gradient(circle at 80% 20%,rgba(216,60,255,.24),transparent 24%),
+    radial-gradient(circle at 50% 70%,rgba(90,140,255,.18),transparent 28%),
+    radial-gradient(circle at 50% 50%,rgba(255,255,255,.05),transparent 60%);
+  filter:blur(120px) saturate(1.4);
+  animation:nebulaMove 22s ease-in-out infinite alternate;
+}
+
+.space::after,
+.premium-bg::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-4;
+  pointer-events:none;
+  background-image:
+    radial-gradient(2px 2px at 12% 24%,rgba(255,255,255,.95),transparent),
+    radial-gradient(1px 1px at 40% 70%,rgba(255,255,255,.7),transparent),
+    radial-gradient(2px 2px at 78% 36%,rgba(255,255,255,.9),transparent),
+    radial-gradient(1px 1px at 62% 82%,rgba(255,255,255,.7),transparent),
+    radial-gradient(2px 2px at 88% 58%,rgba(255,255,255,.85),transparent),
+    radial-gradient(1px 1px at 25% 86%,rgba(255,255,255,.7),transparent),
+    radial-gradient(2px 2px at 56% 14%,rgba(255,255,255,.9),transparent),
+    radial-gradient(1px 1px at 92% 12%,rgba(255,255,255,.6),transparent);
+  background-size:100% 100%;
+  opacity:.9;
+  animation:starFloat 16s linear infinite;
+}
+
+.hero{
+  position:relative;
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:40%;
+  width:620px;
+  height:620px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 28%,rgba(255,255,255,.34),transparent 12%),
+    radial-gradient(circle,rgba(216,60,255,.85),rgba(120,90,255,.36) 42%,transparent 72%);
+  filter:blur(2px);
+  opacity:.75;
+  box-shadow:
+    0 0 220px rgba(216,60,255,.36),
+    0 0 420px rgba(120,90,255,.16),
+    inset 0 0 120px rgba(255,255,255,.08);
+  animation:corePulse 7s ease-in-out infinite alternate;
+  z-index:-3;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:40%;
+  width:1100px;
+  height:1100px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:
+    conic-gradient(from 0deg,
+      rgba(216,60,255,.08),
+      transparent 18%,
+      rgba(120,90,255,.08),
+      transparent 42%,
+      rgba(255,255,255,.04),
+      transparent 72%);
+  filter:blur(18px);
+  opacity:.7;
+  animation:ringSpin 46s linear infinite;
+  z-index:-4;
+}
+
+@keyframes nebulaMove{
+  from{
+    transform:scale(1) translateY(0) rotate(0deg);
+  }
+  to{
+    transform:scale(1.08) translateY(-20px) rotate(4deg);
+  }
+}
+
+@keyframes starFloat{
+  from{
+    transform:translateY(0);
+  }
+  to{
+    transform:translateY(-40px);
+  }
+}
+
+@keyframes corePulse{
+  from{
+    transform:translate(-50%,-50%) scale(1);
+    opacity:.68;
+  }
+  to{
+    transform:translate(-50%,-50%) scale(1.08);
+    opacity:.86;
+  }
+}
+
+@keyframes ringSpin{
+  to{
+    transform:translate(-50%,-50%) rotate(360deg);
+  }
+}
+
+@media(max-width:760px){
+  .hero::before{
+    width:360px;
+    height:360px;
+    top:34%;
+  }
+
+  .hero::after{
+    width:700px;
+    height:700px;
+    top:34%;
   }
 }
 
