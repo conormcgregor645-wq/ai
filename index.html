@@ -1219,10 +1219,282 @@ body.light p,
   }
 }
 
+
+/* ===== FINAL COSMIC BACKGROUND LIKE REFERENCE ===== */
+body{
+  background:#02030a!important;
+  overflow-x:hidden;
+}
+.space,
+.premium-bg,
+.glow-bg{
+  display:none!important;
+}
+body:before,
+body:after{
+  display:none!important;
+}
+.cosmos-bg{
+  position:fixed;
+  inset:0;
+  z-index:-20;
+  overflow:hidden;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 35%,rgba(126,44,255,.16),transparent 26%),
+    radial-gradient(circle at 16% 44%,rgba(216,60,255,.18),transparent 30%),
+    radial-gradient(circle at 86% 38%,rgba(216,60,255,.18),transparent 32%),
+    linear-gradient(180deg,#02030a 0%,#050414 48%,#010208 100%);
+}
+.cosmos-stars{
+  position:absolute;
+  inset:-20%;
+  opacity:.85;
+  background-repeat:repeat;
+}
+.stars-a{
+  background-image:
+    radial-gradient(circle,rgba(255,255,255,.95) 1px,transparent 1.7px),
+    radial-gradient(circle,rgba(226,100,255,.85) 1px,transparent 1.7px);
+  background-size:135px 135px,230px 230px;
+  animation:starsDriftA 90s linear infinite;
+}
+.stars-b{
+  background-image:
+    radial-gradient(circle,rgba(125,160,255,.70) 1px,transparent 1.6px),
+    radial-gradient(circle,rgba(255,255,255,.55) 1px,transparent 1.5px);
+  background-size:310px 310px,460px 460px;
+  opacity:.55;
+  animation:starsDriftB 150s linear infinite reverse;
+}
+.cosmos-nebula{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(42px) saturate(1.4);
+  mix-blend-mode:screen;
+}
+.nebula-left{
+  left:-12vw;
+  top:17vh;
+  width:56vw;
+  height:42vw;
+  background:
+    radial-gradient(ellipse at 45% 50%,rgba(216,60,255,.42),transparent 58%),
+    radial-gradient(ellipse at 65% 40%,rgba(123,61,255,.24),transparent 56%);
+  animation:nebulaFloatLeft 17s ease-in-out infinite alternate;
+}
+.nebula-right{
+  right:-12vw;
+  top:6vh;
+  width:58vw;
+  height:50vw;
+  background:
+    radial-gradient(ellipse at 55% 50%,rgba(216,60,255,.38),transparent 58%),
+    radial-gradient(ellipse at 35% 40%,rgba(95,98,255,.22),transparent 56%);
+  animation:nebulaFloatRight 19s ease-in-out infinite alternate;
+}
+.cosmos-galaxy{
+  position:absolute;
+  left:7vw;
+  top:13vh;
+  width:250px;
+  height:125px;
+  border-radius:50%;
+  transform:rotate(-18deg);
+  background:
+    radial-gradient(ellipse at center,rgba(255,245,255,.96),rgba(255,105,226,.78) 10%,rgba(171,61,255,.46) 28%,rgba(60,30,140,.12) 52%,transparent 70%);
+  box-shadow:
+    0 0 36px rgba(255,105,226,.55),
+    0 0 90px rgba(139,61,255,.35);
+  animation:galaxySpin 34s linear infinite;
+}
+.cosmos-galaxy:before,
+.cosmos-galaxy:after{
+  content:"";
+  position:absolute;
+  inset:22px -34px;
+  border-radius:50%;
+  border-top:2px solid rgba(255,124,235,.34);
+  border-bottom:1px solid rgba(120,120,255,.16);
+}
+.cosmos-galaxy:after{
+  inset:38px -58px;
+  opacity:.65;
+  transform:rotate(12deg);
+}
+.cosmos-planet{
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+}
+.planet-left{
+  left:-120px;
+  top:250px;
+  width:310px;
+  height:310px;
+  background:
+    radial-gradient(circle at 72% 34%,rgba(255,220,255,.30),transparent 13%),
+    radial-gradient(circle at 76% 48%,rgba(230,60,255,.38),transparent 42%),
+    linear-gradient(135deg,#1b0c3b,#2d0c56 48%,#05020a 82%);
+  box-shadow:
+    0 0 70px rgba(216,60,255,.42),
+    inset -38px -44px 80px rgba(0,0,0,.80),
+    inset 18px 10px 50px rgba(255,120,240,.10);
+  border:1px solid rgba(255,125,235,.36);
+  animation:planetFloat 13s ease-in-out infinite alternate;
+}
+.planet-left:after{
+  content:"";
+  position:absolute;
+  inset:-18px;
+  border-radius:50%;
+  border-left:5px solid rgba(255,112,234,.40);
+  filter:blur(.6px);
+}
+.planet-right{
+  right:-210px;
+  top:180px;
+  width:540px;
+  height:540px;
+  background:
+    radial-gradient(circle at 25% 26%,rgba(255,230,255,.50),transparent 12%),
+    radial-gradient(circle at 28% 38%,rgba(255,86,220,.34),transparent 30%),
+    linear-gradient(135deg,#200d40,#48146a 52%,#07020d 88%);
+  box-shadow:
+    0 0 120px rgba(255,80,225,.45),
+    inset -58px -70px 130px rgba(0,0,0,.82),
+    inset 28px 22px 80px rgba(255,160,245,.12);
+  border:1px solid rgba(255,116,232,.40);
+  animation:planetFloat 15s ease-in-out infinite alternate-reverse;
+}
+.planet-right:after{
+  content:"";
+  position:absolute;
+  inset:-24px;
+  border-radius:50%;
+  border-left:6px solid rgba(255,120,235,.38);
+  filter:blur(.8px);
+}
+.cosmos-moon{
+  position:absolute;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 28%,rgba(255,210,255,.42),transparent 18%),
+    linear-gradient(135deg,#361155,#08030f);
+  box-shadow:0 0 24px rgba(216,60,255,.24),inset -10px -14px 24px rgba(0,0,0,.7);
+}
+.moon-one{
+  right:8vw;
+  top:13vh;
+  width:54px;
+  height:54px;
+  animation:moonFloat 8s ease-in-out infinite alternate;
+}
+.moon-two{
+  left:16vw;
+  top:40vh;
+  width:32px;
+  height:32px;
+  opacity:.72;
+  animation:moonFloat 10s ease-in-out infinite alternate-reverse;
+}
+.cosmos-asteroid{
+  position:absolute;
+  border-radius:48% 52% 42% 58%;
+  background:linear-gradient(135deg,#483059,#0a0512);
+  border:1px solid rgba(255,255,255,.09);
+  box-shadow:0 0 20px rgba(216,60,255,.20);
+  filter:drop-shadow(0 0 12px rgba(216,60,255,.14));
+}
+.ast-a{
+  right:13vw;
+  top:43vh;
+  width:58px;
+  height:42px;
+  animation:asteroidFloat 8s ease-in-out infinite alternate;
+}
+.ast-b{
+  right:24vw;
+  top:50vh;
+  width:36px;
+  height:27px;
+  animation:asteroidFloat 10s ease-in-out infinite alternate-reverse;
+}
+.ast-c{
+  left:10vw;
+  bottom:34vh;
+  width:42px;
+  height:30px;
+  animation:asteroidFloat 9s ease-in-out infinite alternate;
+}
+.cosmos-shooting{
+  position:absolute;
+  width:220px;
+  height:2px;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,#fff,#e13dff,transparent);
+  filter:drop-shadow(0 0 14px rgba(225,61,255,.85));
+  opacity:0;
+  transform:rotate(-32deg) translateX(-260px);
+}
+.shooting-a{
+  left:20vw;
+  top:18vh;
+  animation:shootingMove 7s ease-in-out infinite 1s;
+}
+.shooting-b{
+  right:20vw;
+  top:26vh;
+  animation:shootingMove 9s ease-in-out infinite 4s;
+}
+.hero{
+  position:relative;
+  overflow:hidden;
+}
+.hero:before,
+.hero:after{
+  display:none!important;
+}
+@keyframes starsDriftA{to{transform:translateY(135px)}}
+@keyframes starsDriftB{to{transform:translate(-120px,90px)}}
+@keyframes nebulaFloatLeft{from{transform:translate(-1%,-1%) scale(1)}to{transform:translate(2%,2%) scale(1.05)}}
+@keyframes nebulaFloatRight{from{transform:translate(1%,-1%) scale(1)}to{transform:translate(-2%,2%) scale(1.06)}}
+@keyframes galaxySpin{to{transform:rotate(342deg)}}
+@keyframes planetFloat{from{transform:translateY(0)}to{transform:translateY(-18px)}}
+@keyframes moonFloat{from{transform:translateY(0)}to{transform:translateY(-14px)}}
+@keyframes asteroidFloat{from{transform:translateY(0) rotate(0deg)}to{transform:translateY(-18px) rotate(10deg)}}
+@keyframes shootingMove{
+  0%,72%{opacity:0;transform:rotate(-32deg) translateX(-260px)}
+  80%{opacity:1}
+  100%{opacity:0;transform:rotate(-32deg) translateX(115vw)}
+}
+@media(max-width:900px){
+  .planet-left{width:210px;height:210px;left:-110px;top:260px}
+  .planet-right{width:320px;height:320px;right:-170px;top:190px}
+  .cosmos-galaxy{width:170px;height:85px;left:5vw;top:16vh}
+  .cosmos-asteroid{opacity:.65}
+}
+
 </style>
 </head>
 
 <body class="fade-page">
+  <div class="cosmos-bg" aria-hidden="true">
+    <div class="cosmos-stars stars-a"></div>
+    <div class="cosmos-stars stars-b"></div>
+    <div class="cosmos-nebula nebula-left"></div>
+    <div class="cosmos-nebula nebula-right"></div>
+    <div class="cosmos-galaxy"></div>
+    <div class="cosmos-planet planet-left"></div>
+    <div class="cosmos-planet planet-right"></div>
+    <div class="cosmos-moon moon-one"></div>
+    <div class="cosmos-moon moon-two"></div>
+    <div class="cosmos-asteroid ast-a"></div>
+    <div class="cosmos-asteroid ast-b"></div>
+    <div class="cosmos-asteroid ast-c"></div>
+    <div class="cosmos-shooting shooting-a"></div>
+    <div class="cosmos-shooting shooting-b"></div>
+  </div>
 <div class="cursor-glow" id="cursorGlow"></div>
 
 <div class="command" id="command">
